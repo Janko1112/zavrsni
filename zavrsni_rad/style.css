@@ -56,7 +56,8 @@ nav a:hover,
 
 .btn{
     padding:12px 18px;
-    border:none;
+    border:1px rgb(231, 131, 131);
+    background-color: rgb(231, 131, 131);
     border-radius:8px;
     cursor:pointer;
     transition:0.3s;
@@ -326,6 +327,59 @@ footer{
 footer p{
     color:#94a3b8;
 }
+
+
+/* QUANTITY */
+
+.quantity-box{
+    margin:25px 0;
+}
+
+.quantity-box label{
+    display:block;
+    margin-bottom:10px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.quantity-controls{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.quantity-controls button{
+    width:45px;
+    height:45px;
+    border:none;
+    border-radius:8px;
+    background:#38bdf8;
+    color:black;
+    font-size:22px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.quantity-controls button:hover{
+    background:#0ea5e9;
+}
+
+.quantity-controls input{
+    width:70px;
+    height:45px;
+    text-align: center;
+    font-size:20px;
+    border:none;
+    border-radius:8px;
+    background:#1e293b;
+    color:white;
+}
+
+.add-cart-btn{
+    width:30%;
+}
+
 
 /* RESPONSIVE */
 
