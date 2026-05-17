@@ -61,9 +61,9 @@ if(isset($_POST['add'])){
           </nav>
 
           <div class="header-buttons">
-              <span>Bok, admin</span>
+              <span>Dobro došli, admin</span>
               <button class="btn btn-login logout" onclick="window.location.href='logout.php';">Odjava</button>
-              <button class="btn btn-cart">Košarica</button>
+              <button class="btn btn-cart" onclick="window.location.href='cart.php';">Košarica</button>
           </div>
        </header>
 

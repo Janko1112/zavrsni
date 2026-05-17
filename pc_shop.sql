@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2026 at 09:44 PM
+-- Generation Time: May 17, 2026 at 03:31 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `pc_shop`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int(11) NOT NULL,
+  `user_username` varchar(255) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -55,7 +68,7 @@ INSERT INTO `products` (`id`, `name`, `price`, `quantity`, `category`, `image`, 
 (16, 'Kingston NV2 2 TB', 450.00, 100, 'komponente', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHFHIwSg8zF3WlBj7cV1HnZ87nBVXBbGd4Sw&s', 'Uređaj za pohranu podataka velike brzine učitavanja.'),
 (17, 'ASUS ROG X870E', 640.00, 100, 'komponente', 'https://www.adm.hr/slike/velike/asus-rog-strix-x870e-e-gaming-wifi-amd-x870e-am5-ddr5-atx-90-17051-095200094.webp', 'Izvanredna matična ploča za gaming.'),
 (18, 'MSI Z890 Gaming Plus', 300.00, 100, 'komponente', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHzm2gMENm3OAJ9veJnweI96QQybRUYmybvg&s', 'Izvanredna matična ploča za gaming.'),
-(19, 'NZXT Kraken Elite 360 RGB', 230.00, 100, 'komponente', 'https://www.nabava.net/slike/products/33/09/43750933/nzxt-kraken-elite-360-rgb_d17de9dc.png', 'Vodeno hlađenje za gaming računala'),
+(19, 'NZXT Kraken Elite 360 RGB', 230.00, 95, 'komponente', 'https://www.nabava.net/slike/products/33/09/43750933/nzxt-kraken-elite-360-rgb_d17de9dc.png', 'Vodeno hlađenje za gaming računala'),
 (20, 'Corsair RM850', 140.00, 100, 'komponente', 'https://assets.corsair.com/image/upload/f_auto,q_auto/content/CP-9020056-UK-RM850-01.png', 'Odlično napajanje za računala visokih performansi.'),
 (21, 'Logitech G Pro X', 120.00, 100, 'gaming', 'https://images.unsplash.com/photo-1547394765-185e1e68f34e?q=80&w=1200&auto=format&fit=crop', 'Doživi zvuk studijske kvalitete i komuniciraj kao profesionalac uz Blue VO!CE tehnologiju.'),
 (22, 'Razer DeathAdder', 60.00, 100, 'gaming', 'https://images.unsplash.com/photo-1613141412501-9012977f1969?q=80&w=1200&auto=format&fit=crop', 'Legendarna ergonomija i vrhunski senzor čine ovaj miš tvojim najjačim oružjem u igri.'),
@@ -115,6 +128,12 @@ INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
 --
 
 --
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
@@ -130,6 +149,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `products`

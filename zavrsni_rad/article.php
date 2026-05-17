@@ -45,13 +45,13 @@ if (mysqli_num_rows($result) > 0) {
     <div class="header-buttons">
         <?php if(isset($_SESSION['username'])): ?>
 
-            <span>Bok, <?php echo $_SESSION['username']; ?></span>
+            <span>Dobro došli, <?php echo $_SESSION['username']; ?></span>
             <button class="btn btn-login logout" onclick="window.location.href='logout.php';">Odjava</button>
         <?php else: ?>
 
             <button class="btn btn-login" onclick="window.location.href='login.php';">Prijava</button>
         <?php endif; ?>
-        <button class="btn btn-cart">Košarica</button>
+        <button class="btn btn-cart" onclick="window.location.href='cart.php';">Košarica</button>
     </div>
 </header>
 
@@ -85,7 +85,7 @@ if (mysqli_num_rows($result) > 0) {
                 </div>
 
                 <?php if(isset($_SESSION['username'])): ?>
-                    <button type="submit" class="btn add-cart-btn" style="border: none; cursor: pointer;">Dodaj u košaricu</button>
+                    <button type="submit" class="btn add-cart-btn">Dodaj u košaricu</button>
                 <?php else: ?>
                     <button type="button" class="btn add-cart-btn" onclick="alert('Potrebna je prijava! Morate se ulogirati kako biste dodali artikl u košaricu.'); window.location.href='login.php?info=auth_required';">
                         Dodaj u košaricu

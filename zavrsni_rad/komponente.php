@@ -38,7 +38,7 @@ include "db.php";
 
                 <button class="btn btn-login" onclick="window.location.href='login.php';">Prijava</button>
             <?php endif; ?>
-            <button class="btn btn-cart">Košarica</button>
+            <button class="btn btn-cart" onclick="window.location.href='cart.php';">Košarica</button>
         </div>
     </header>
 
