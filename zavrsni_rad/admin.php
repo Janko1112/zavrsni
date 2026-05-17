@@ -43,7 +43,7 @@ if(isset($_POST['add'])){
 <html>
 <head>
     <title>Admin Panel</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=">
 </head>
 <body>
 
@@ -56,13 +56,13 @@ if(isset($_POST['add'])){
               <a href="komponente.php">Komponente</a>
               <a href="gaming.php">Gaming</a>
               <a href="laptopi.php">Laptopi</a>
-              <a href="kontakt.html">Kontakt</a>
-              <a href="admin.php" class="active" style="color: #ffc107;">Admin Panel</a>
+              <a href="kontakt.php">Kontakt</a>
+              <a href="admin.php" class="active admin_panel">Admin Panel</a>
           </nav>
 
-          <div class="header-buttons" style="display: flex; align-items: center; gap: 10px;">
-              <span style="color: #fff;">Bok, admin</span>
-              <button class="btn btn-login" style="background-color: #dc3545;" onclick="window.location.href='logout.php';">Odjava</button>
+          <div class="header-buttons">
+              <span>Bok, admin</span>
+              <button class="btn btn-login logout" onclick="window.location.href='logout.php';">Odjava</button>
               <button class="btn btn-cart">Košarica</button>
           </div>
        </header>

@@ -1,20 +1,16 @@
 <?php
-session_start(); // Pokretanje sesije kako bismo znali je li korisnik ulogiran
+session_start();
 include "db.php";
 
-// 1. KORAK: Provjera postoji li ID artikla u URL-u (npr. artikl.php?id=5)
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     die("Artikl nije pronađen ili ID nije proslijeđen.");
 }
 
-// Čistimo ID od nepoželjnih znakova radi sigurnosti baze podataka
 $artikl_id = mysqli_real_escape_string($conn, $_GET['id']);
 
-// 2. KORAK: Dohvaćanje točno tog jednog artikla iz baze podataka
 $sql = "SELECT * FROM products WHERE id = '$artikl_id'";
 $result = mysqli_query($conn, $sql);
 
-// Provjeravamo je li baza uopće vratila taj artikl
 if (mysqli_num_rows($result) > 0) {
     $row = mysqli_fetch_assoc($result);
 } else {
@@ -28,7 +24,7 @@ if (mysqli_num_rows($result) > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $row['name']; ?> - Detalji</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=">
 </head>
 <body>
 
@@ -39,19 +35,18 @@ if (mysqli_num_rows($result) > 0) {
         <a href="komponente.php">Komponente</a>
         <a href="gaming.php">Gaming</a>
         <a href="laptopi.php">Laptopi</a>
-        <a href="kontakt.html">Kontakt</a>
+        <a href="kontakt.php">Kontakt</a>
         
         <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
-            <!-- Ako je ulogiran admin, vidi prečac za admin panel -->
-            <a href="admin.php" style="color: #ffc107;">Admin Panel</a>
+            <a href="admin.php" class="admin_panel">Admin Panel</a>
         <?php endif; ?>
     </nav>
 
-    <div class="header-buttons" style="display: flex; align-items: center; gap: 10px;">
+    <div class="header-buttons">
         <?php if(isset($_SESSION['username'])): ?>
 
-            <span style="color: #fff;">Bok, <?php echo $_SESSION['username']; ?></span>
-            <button class="btn btn-login" style="background-color: #dc3545;" onclick="window.location.href='logout.php';">Odjava</button>
+            <span>Bok, <?php echo $_SESSION['username']; ?></span>
+            <button class="btn btn-login logout" onclick="window.location.href='logout.php';">Odjava</button>
         <?php else: ?>
 
             <button class="btn btn-login" onclick="window.location.href='login.php';">Prijava</button>
@@ -76,7 +71,7 @@ if (mysqli_num_rows($result) > 0) {
             </div>
 
 
-            <form action="dodaj_u_kosaricu.php" method="POST">
+            <form action="add_to_cart.php" method="POST">
                 <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
                 
                 <div class="quantity-box">
@@ -90,14 +85,13 @@ if (mysqli_num_rows($result) > 0) {
                 </div>
 
                 <?php if(isset($_SESSION['username'])): ?>
-
                     <button type="submit" class="btn add-cart-btn" style="border: none; cursor: pointer;">Dodaj u košaricu</button>
                 <?php else: ?>
-
-                    <button type="button" class="btn add-cart-btn" style="background-color: #e44d26;" onclick="alert('Potrebna je prijava! Morate se ulogirati kako biste dodali artikl u košaricu.'); window.location.href='login.php?info=auth_required';">
+                    <button type="button" class="btn add-cart-btn" onclick="alert('Potrebna je prijava! Morate se ulogirati kako biste dodali artikl u košaricu.'); window.location.href='login.php?info=auth_required';">
                         Dodaj u košaricu
-                    </button>
+                    </button>   
                 <?php endif; ?>
+
             </form>
 
         </div>

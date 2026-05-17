@@ -1,29 +1,26 @@
 <?php 
 session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="hr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Komponente</title>
+    <title>Kontakt</title>
     <link rel="stylesheet" href="style.css?v=">
 </head>
 <body>
-
-<?php
-include "db.php";
-?>
 
     <header>
         <div class="logo">PC SHOP</div>
 
         <nav>
             <a href="index.php">Početna</a>
-            <a href="komponente.php" class="active">Komponente</a>
+            <a href="komponente.php">Komponente</a>
             <a href="gaming.php">Gaming</a>
             <a href="laptopi.php">Laptopi</a>
-            <a href="kontakt.php">Kontakt</a>
+            <a href="kontakt.php" class="active">Kontakt</a>
             
             <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
                 <a href="admin.php" class="admin_panel">Admin Panel</a>
@@ -44,40 +41,36 @@ include "db.php";
 
     <section class="page-banner">
         <div>
-            <h1>Komponente</h1>
-            <p>Najnovije računalne komponente za gaming i profesionalce.</p>
+            <h1>Kontakt</h1>
+            <p>Kontaktiraj nas za dodatne informacije.</p>
         </div>
     </section>
 
     <section class="container">
 
-        <div class="cards">
+        <h2 class="section-title">Pošalji poruku</h2>
 
-            <?php
-                $sql = "SELECT * FROM products WHERE category='komponente' ORDER BY id DESC";
-                $result = mysqli_query($conn, $sql);
+        <div class="contact-box">
 
-                while($row = mysqli_fetch_assoc($result)) {
-                    ?>
-                    <div class="card">
+            <form>
 
-                        <img src="<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
+                <input type="text" placeholder="Ime i prezime">
 
-                        <div class="card-content">
-                            <h3><?php echo $row['name']; ?></h3>
-                            <p><?php echo $row['description']; ?></p>
-                            <div class="price"><?php echo $row['price']; ?>€</div>
-                            
-                            <a href="article.php?id=<?php echo $row['id']; ?>" class="btn">Detalji</a>
-                        </div>
-                    </div>
-                    <?php
-                }
-            ?>
+                <input type="email" placeholder="Email adresa">
+
+                <textarea placeholder="Vaša poruka"></textarea>
+
+                <button class="btn">Pošalji</button>
+
+            </form>
 
         </div>
 
     </section>
+
+    <footer>
+        <p>© 2026 PC SHOP</p>
+    </footer>
 
 </body>
 </html>

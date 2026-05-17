@@ -62,7 +62,8 @@ if(isset($_POST['login'])){
 <html>
 <head>
     <title>Login</title>
-    <link rel='stylesheet' href='style.css'>
+    <link rel="stylesheet" href="style.css?v=">
+
 </head>
 <body>
 
@@ -73,7 +74,7 @@ if(isset($_POST['login'])){
         <h2 class="section-title">Prijava</h2>
         
         <?php if(!empty($poruka)): ?>
-            <p style="color: #dc3545; text-align: center; margin-bottom: 15px; font-weight: bold;"><?php echo $poruka; ?></p>
+            <p class="message"><?php echo $poruka; ?></p>
         <?php endif; ?>
 
         <form method="POST">

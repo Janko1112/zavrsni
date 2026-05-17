@@ -1,3 +1,5 @@
+
+
 *{
     margin:0;
     padding:0;
@@ -15,7 +17,6 @@ a{
     color:white;
 }
 
-/* HEADER */
 
 header{
     background:#111827;
@@ -52,6 +53,7 @@ nav a:hover,
 .header-buttons{
     display:flex;
     gap:15px;
+    align-items: center;
 }
 
 .btn{
@@ -202,7 +204,6 @@ nav a:hover,
     font-size:24px;
 }
 
-/* PRODUCTS / CARDS */
 
 .products,
 .cards{
@@ -472,3 +473,25 @@ footer p{
         font-size:32px;
     }
 }
+
+p.message{
+    color: #ac3347;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+a.admin_panel{
+    color: #ffc107;
+}
+
+a.active.admin_panel{
+    color: #ffc107;
+}
+
+.btn.btn-login.logout{
+    background-color: #dc3545;
+    border: #dc3545;
+    color: white;
+}
+

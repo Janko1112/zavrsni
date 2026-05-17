@@ -1,5 +1,5 @@
 <?php 
-session_start(); // Pokretanje sesije na samom vrhu datoteke
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="hr">
@@ -7,11 +7,10 @@ session_start(); // Pokretanje sesije na samom vrhu datoteke
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PC Shop</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=">
 </head>
 <body>
 
-    <!-- HEADER -->
     <header>
         <div class="logo">PC SHOP</div>
 
@@ -20,17 +19,17 @@ session_start(); // Pokretanje sesije na samom vrhu datoteke
             <a href="komponente.php">Komponente</a>
             <a href="gaming.php">Gaming</a>
             <a href="laptopi.php">Laptopi</a>
-            <a href="kontakt.html">Kontakt</a>
+            <a href="kontakt.php">Kontakt</a>
             
             <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
-                <a href="admin.php" style="color: #ffc107;">Admin Panel</a>
+                <a href="admin.php" class="admin_panel">Admin Panel</a>
             <?php endif; ?>
         </nav>
 
-        <div class="header-buttons" style="display: flex; align-items: center; gap: 10px;">
+        <div class="header-buttons">
             <?php if(isset($_SESSION['username'])): ?>
-                <span style="color: #fff;">Bok, <?php echo $_SESSION['username']; ?></span>
-                <button class="btn btn-login" style="background-color: #dc3545;" onclick="window.location.href='logout.php';">Odjava</button>
+                <span>Dobro došli, <?php echo $_SESSION['username']; ?></span>
+                <button class="btn btn-login logout" onclick="window.location.href='logout.php';">Odjava</button>
             <?php else: ?>
 
                 <button class="btn btn-login" onclick="window.location.href='login.php';">Prijava</button>
@@ -39,7 +38,6 @@ session_start(); // Pokretanje sesije na samom vrhu datoteke
         </div>
     </header>
 
-    <!-- HERO -->
     <section class="hero">
         <div class="hero-text">
             <h1>Najbolje <span>računalne komponente</span> na jednom mjestu</h1>
