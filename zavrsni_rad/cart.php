@@ -68,11 +68,9 @@ $result = mysqli_query($conn, $sql);
                             <p>Cijena: <?php echo $row['price']; ?> €</p>
                             <p>Količina: <?php echo $row['cart_qty']; ?></p>
                         </div>
-                        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px;">
+                        <div class="cart-subtotal">
                             <strong><?php echo $subtotal; ?> €</strong>
-                            <!-- NOVO: Gumb za brisanje koji prosljeđuje jedinstveni cart_id -->
-                            <a href="obrisi_iz_kosarice.php?id=<?php echo $row['cart_id']; ?>" 
-                            style="color: #dc3545; font-size: 14px; text-decoration: none; font-weight: bold; border: 1px solid #dc3545; padding: 4px 8px; border-radius: 4px; background: #fff;"
+                            <a class="delete-cart" href="delete_cart.php?id=<?php echo $row['cart_id']; ?>" 
                             onclick="return confirm('Jeste li sigurni da želite ukloniti ovaj artikl?');">
                             Ukloni
                             </a>
@@ -91,7 +89,7 @@ $result = mysqli_query($conn, $sql);
         <div class="contact-box shipping-box">
             <h2>Podaci za dostavu</h2>
             <br>
-            <form action="izvrsi_narudzbu.php" method="POST">
+            <form action="final_order.php" method="POST">
                 <input type="text" name="ime" placeholder="Ime" required>
                 <input type="text" name="prezime" placeholder="Prezime" required>
                 <input type="text" name="adresa" placeholder="Adresa i kućni broj" required>

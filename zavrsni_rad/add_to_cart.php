@@ -2,7 +2,6 @@
 session_start();
 include "db.php";
 
-// Zaštita: Ako korisnik nije ulogiran, preusmjeri ga na login
 if (!isset($_SESSION['username'])) {
     header("Location: login.php?info=auth_required");
     exit();
@@ -37,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (mysqli_query($conn, $sql)) {
-        // POPRAVAK: Umjesto cart.php, vraćamo korisnika na istu stranicu artikla kako bi nastavio kupovinu
         echo "
         <script>
         alert('Artikl " . $product['name'] . " je uspješno dodan u košaricu!');

@@ -66,7 +66,6 @@ include "db.php";
                     <h3><?php echo $row['name']; ?></h3>
                     <p><?php echo $row['description']; ?></p>
                     <div class="price"><?php echo $row['price']; ?>€</div>
-                    <!-- Vodi na istu univerzalnu stranicu s detaljima -->
                     <a href="article.php?id=<?php echo $row['id']; ?>" class="btn">Detalji</a>
                 </div>
             </div>
