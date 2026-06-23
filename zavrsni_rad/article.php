@@ -29,7 +29,7 @@ if (mysqli_num_rows($result) > 0) {
 <body>
 
 <header>
-    <div class="logo">PC SHOP</div>
+    <div class="logo">PC Shop</div>
     <nav>
         <a href="index.php">Početna</a>
         <a href="komponente.php">Komponente</a>

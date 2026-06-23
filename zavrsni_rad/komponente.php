@@ -16,7 +16,7 @@ include "db.php";
 ?>
 
     <header>
-        <div class="logo">PC SHOP</div>
+        <div class="logo">PC Shop</div>
 
         <nav>
             <a href="index.php">Početna</a>

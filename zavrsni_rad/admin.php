@@ -32,8 +32,7 @@ if(isset($_POST['add'])){
 
     echo "
     <script>
-    alert('Artikl dodan!');
-    window.location.href = window.location.href; // Osvježava stranicu da se spriječi ponovno slanje na F5
+    window.location.href = window.location.href;
     </script>
     ";
 }

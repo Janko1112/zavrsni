@@ -12,7 +12,7 @@ session_start();
 <body>
 
     <header>
-        <div class="logo">PC SHOP</div>
+        <div class="logo">PC Shop</div>
 
         <nav>
             <a href="index.php" class="active">Početna</a>
@@ -120,7 +120,7 @@ session_start();
     </section>
 
     <footer>
-        <p>© 2026 PC SHOP | Sva prava pridržana</p>
+        <p>© 2026 PC Shop | Sva prava pridržana</p>
     </footer>
 
 </body>

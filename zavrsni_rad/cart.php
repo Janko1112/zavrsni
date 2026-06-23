@@ -7,12 +7,12 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-$username = $_SESSION['username'];
+$user_id = $_SESSION['user_id'];
 
 $sql = "SELECT cart.id AS cart_id, cart.quantity AS cart_qty, products.* 
         FROM cart 
         JOIN products ON cart.product_id = products.id 
-        WHERE cart.user_username = '$username'";
+        WHERE cart.user_id = '$user_id'";
 $result = mysqli_query($conn, $sql);
 ?>
 <!DOCTYPE html>
@@ -24,7 +24,7 @@ $result = mysqli_query($conn, $sql);
 </head>
 <body>
     <header>
-        <div class="logo">PC SHOP</div>
+        <div class="logo">PC Shop</div>
 
         <nav>
             <a href="index.php">Početna</a>
@@ -43,7 +43,6 @@ $result = mysqli_query($conn, $sql);
                 <span>Dobro došli, <?php echo $_SESSION['username']; ?></span>
                 <button class="btn btn-login logout" onclick="window.location.href='logout.php';">Odjava</button>
             <?php else: ?>
-
                 <button class="btn btn-login" onclick="window.location.href='login.php';">Prijava</button>
             <?php endif; ?>
             <button class="btn btn-cart" onclick="window.location.href='cart.php';">Košarica</button>

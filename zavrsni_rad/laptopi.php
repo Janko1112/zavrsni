@@ -13,7 +13,7 @@ include "db.php";
 <body>
 
     <header>
-        <div class="logo">PC SHOP</div>
+        <div class="logo">PC Shop</div>
 
         <nav>
             <a href="index.php">Početna</a>
@@ -77,7 +77,7 @@ include "db.php";
     </section>
 
     <footer>
-        <p>© 2026 PC SHOP</p>
+        <p>© 2026 PC Shop</p>
     </footer>
 
 </body>
