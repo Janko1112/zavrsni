@@ -1,5 +1,6 @@
-<?php 
-session_start();
+<?php
+include_once "helpers.php";
+pokreni_sesiju();
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +9,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kontakt</title>
-    <link rel="stylesheet" href="style.css?v=">
+    <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
@@ -29,12 +30,16 @@ session_start();
 
         <div class="header-buttons">
             <?php if(isset($_SESSION['username'])): ?>
-                <span>Dobro došli, <?php echo $_SESSION['username']; ?></span>
+                <span>Dobro došli, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+                <a href="wishlist.php" class="btn btn-login">Lista želja</a>
+                <a href="moje_narudzbe.php" class="btn btn-login">Moje narudžbe</a>
+                <a href="profil.php" class="btn btn-login">Moj profil</a>
                 <button class="btn btn-login logout" onclick="window.location.href='logout.php';">Odjava</button>
             <?php else: ?>
 
                 <button class="btn btn-login" onclick="window.location.href='login.php';">Prijava</button>
             <?php endif; ?>
+            <a href="compare.php" class="btn btn-login">Usporedba</a>
             <button class="btn btn-cart" onclick="window.location.href='cart.php';">Košarica</button>
         </div>
     </header>
@@ -52,15 +57,22 @@ session_start();
 
         <div class="contact-box">
 
-            <form>
+            <?php if (isset($_GET['poslano'])): ?>
+                <p class="message message-success">Poruka je poslana. Javit ćemo Vam se u najkraćem roku.</p>
+            <?php elseif (isset($_GET['greska'])): ?>
+                <p class="message">Provjerite podatke — sva polja su obavezna, a email mora biti ispravnog formata.</p>
+            <?php endif; ?>
 
-                <input type="text" placeholder="Ime i prezime">
+            <form action="kontakt_posalji.php" method="POST">
+                <?php echo csrf_polje(); ?>
 
-                <input type="email" placeholder="Email adresa">
+                <input type="text" name="ime" placeholder="Ime i prezime" required>
 
-                <textarea placeholder="Vaša poruka"></textarea>
+                <input type="email" name="email" placeholder="Email adresa" required>
 
-                <button class="btn">Pošalji</button>
+                <textarea name="poruka" placeholder="Vaša poruka" required></textarea>
+
+                <button type="submit" class="btn">Pošalji</button>
 
             </form>
 

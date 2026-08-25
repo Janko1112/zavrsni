@@ -1,117 +1,47 @@
 <?php
-session_start();
-include "db.php";
+include_once "helpers.php";
+pokreni_sesiju();
+include_once "db.php";
+zahtijevaj_admina();
 
-if(!isset($_SESSION['role']) || $_SESSION['role'] != 'admin'){
-    header("Location: login.php");
-    exit();
-}
+$broj_proizvoda = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS n FROM products"))['n'];
+$broj_narudzbi = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS n FROM orders"))['n'];
+$broj_korisnika = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS n FROM users WHERE role = 'user'"))['n'];
+$broj_male_zalihe = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS n FROM products WHERE quantity <= low_stock_threshold"))['n'];
+$broj_neuspjelih_placanja = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS n FROM orders WHERE payment_status = 'neuspješno plaćanje'"))['n'];
+$broj_novih_narudzbi = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS n FROM orders WHERE order_status = 'kreirana'"))['n'];
 
-if(isset($_POST['add'])){
-
-    $name = $_POST['name'];
-    $price = $_POST['price'];
-    $quantity = $_POST['quantity'];
-    $category = $_POST['category'];
-    $image = $_POST['image'];
-    $description = $_POST['description'];
-
-    $sql = "INSERT INTO products
-    (name,price,quantity,category,image,description)
-
-    VALUES(
-    '$name',
-    '$price',
-    '$quantity',
-    '$category',
-    '$image',
-    '$description'
-    )";
-
-    mysqli_query($conn,$sql);
-
-    echo "
-    <script>
-    window.location.href = window.location.href;
-    </script>
-    ";
-}
+$naslov_stranice = "Nadzorna ploča";
+include "admin_header.php";
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin Panel</title>
-    <link rel="stylesheet" href="style.css?v=">
-</head>
-<body>
+<h2 class="section-title">Nadzorna ploča</h2>
 
+<div class="admin-stats">
+    <a href="admin_proizvodi.php" class="admin-stat-card">
+        <span class="admin-stat-broj"><?php echo $broj_proizvoda; ?></span>
+        <span>Proizvoda u katalogu</span>
+    </a>
+    <a href="admin_narudzbe.php" class="admin-stat-card">
+        <span class="admin-stat-broj"><?php echo $broj_narudzbi; ?></span>
+        <span>Ukupno narudžbi</span>
+    </a>
+    <a href="admin_narudzbe.php?status=kreirana" class="admin-stat-card admin-stat-warn">
+        <span class="admin-stat-broj"><?php echo $broj_novih_narudzbi; ?></span>
+        <span>Nove narudžbe na čekanju</span>
+    </a>
+    <a href="admin_korisnici.php" class="admin-stat-card">
+        <span class="admin-stat-broj"><?php echo $broj_korisnika; ?></span>
+        <span>Registriranih korisnika</span>
+    </a>
+    <a href="admin_mala_zaliha.php" class="admin-stat-card admin-stat-warn">
+        <span class="admin-stat-broj"><?php echo $broj_male_zalihe; ?></span>
+        <span>Proizvoda s malom zalihom</span>
+    </a>
+    <a href="admin_neuspjela_placanja.php" class="admin-stat-card admin-stat-danger">
+        <span class="admin-stat-broj"><?php echo $broj_neuspjelih_placanja; ?></span>
+        <span>Neuspjelih plaćanja</span>
+    </a>
+</div>
 
-       <header>
-          <div class="logo">PC SHOP</div>
-
-          <nav>
-              <a href="index.php">Početna</a>
-              <a href="komponente.php">Komponente</a>
-              <a href="gaming.php">Gaming</a>
-              <a href="laptopi.php">Laptopi</a>
-              <a href="kontakt.php">Kontakt</a>
-              <a href="admin.php" class="active admin_panel">Admin Panel</a>
-          </nav>
-
-          <div class="header-buttons">
-              <span>Dobro došli, admin</span>
-              <button class="btn btn-login logout" onclick="window.location.href='logout.php';">Odjava</button>
-              <button class="btn btn-cart" onclick="window.location.href='cart.php';">Košarica</button>
-          </div>
-       </header>
-
-       <section class="container">
-
-              <div class="contact-box">
-
-                     <h2 class="section-title">Dodaj artikl</h2>
-
-                            <form method="POST">
-
-                            <input type="text"
-                                   name="name"
-                                   placeholder="Naziv artikla"
-                                   required>
-
-                            <input type="number"
-                                   name="price"
-                                   placeholder="Cijena"
-                                   required>
-
-                            <input type="number"
-                                   name="quantity"
-                                   placeholder="Količina"
-                                   required>
-
-                            <input type="text"
-                                   name="category"
-                                   placeholder="Kategorija"
-                                   required>
-
-                            <input type="text"
-                                   name="image"
-                                   placeholder="Image URL"
-                                   required>
-
-                            <textarea name="description"
-                            placeholder="Opis proizvoda"></textarea>
-
-                            <button class="btn"
-                                   name="add">
-                            Dodaj artikl
-                            </button>
-
-                     </form>
-
-              </div>
-
-       </section>
-
-</body>
-</html>
+<?php include "admin_footer.php"; ?>

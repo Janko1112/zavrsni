@@ -1,9 +1,10 @@
 <?php
-session_start();
-include "db.php";
+include_once "helpers.php";
+pokreni_sesiju();
+include_once "db.php";
 
-if(isset($_SESSION['username'])) {
-    if($_SESSION['role'] == 'admin') {
+if (isset($_SESSION['username']) && isset($_SESSION['role'])) {
+    if ($_SESSION['role'] == 'admin') {
         header("Location: admin.php");
     } else {
         header("Location: index.php");
@@ -12,43 +13,53 @@ if(isset($_SESSION['username'])) {
 }
 
 $poruka = "";
-if(isset($_GET['info']) && $_GET['info'] == 'auth_required') {
+if (isset($_GET['info']) && $_GET['info'] == 'auth_required') {
     $poruka = "Molimo prijavite se kako biste mogli dodavati artikle u košaricu!";
 }
+if (!empty($_SESSION['istekla_sesija'])) {
+    $poruka = "Vaša sesija je istekla zbog neaktivnosti. Prijavite se ponovno.";
+    unset($_SESSION['istekla_sesija']);
+}
 
-if(isset($_POST['login'])){
+if (isset($_POST['login'])) {
+    csrf_provjeri();
 
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $username = trim($_POST['username']);
     $password = $_POST['password'];
 
-    $sql = "SELECT * FROM users WHERE username='$username'";
-    $result = mysqli_query($conn, $sql);
+    $stmt = mysqli_prepare($conn, "SELECT *, (locked_until IS NOT NULL AND locked_until > NOW()) AS je_zakljucan FROM users WHERE username = ?");
+    mysqli_stmt_bind_param($stmt, 's', $username);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
 
-    if(mysqli_num_rows($result) > 0){
+    if (mysqli_num_rows($result) > 0) {
         $user = mysqli_fetch_assoc($result);
 
-        if(md5($password) === $user['password']) {
+        if ($user['je_zakljucan']) {
+            $poruka = "Ovaj je račun privremeno zaključan zbog previše neuspjelih pokušaja prijave. Pokušajte kasnije.";
+        } elseif (provjeri_lozinku_i_nadogradi($conn, $user, $password)) {
+            ponisti_neuspjele_pokusaje($conn, $user['id']);
+            session_regenerate_id(true);
 
-            $_SESSION['user_id'] = $user['id']; 
+            $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-            $_SESSION['role'] = $user['role'];
 
-            if($user['role'] == 'admin'){
-                header("Location: admin.php");
-                exit();
+            if ($user['role'] == 'admin') {
+                $_SESSION['role'] = 'user';
+                $_SESSION['ceka_admin_pin'] = true;
+                $_SESSION['pending_admin_id'] = $user['id'];
+                header("Location: admin_2fa.php");
             } else {
-                echo "
-                <script>
-                window.location='index.php';
-                </script>
-                ";
-                exit();
+                $_SESSION['role'] = $user['role'];
+                header("Location: index.php");
             }
+            exit();
         } else {
-            echo "<script>alert('Pogrešni podaci! (Lozinka se ne podudara)');</script>";
+            zabiljezi_neuspjeli_pokusaj($conn, $user['id'], $user['failed_attempts']);
+            $poruka = "Pogrešno korisničko ime ili lozinka.";
         }
     } else {
-        echo "<script>alert('Pogrešni podaci! (Korisnik nije pronađen)');</script>";
+        $poruka = "Pogrešno korisničko ime ili lozinka.";
     }
 }
 ?>
@@ -57,20 +68,22 @@ if(isset($_POST['login'])){
 <html lang="hr">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prijava</title>
+    <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">
 </head>
 <body>
 <section class="container">
     <div class="contact-box">
         <h2 class="section-title">Prijava</h2>
-        <?php if(!empty($poruka)): ?>
-            <p class="message"><?php echo $poruka; ?></p>
+        <?php if (!empty($poruka)): ?>
+            <p class="message"><?php echo htmlspecialchars($poruka); ?></p>
         <?php endif; ?>
         <form method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button class="btn" name="login">Login</button>
+            <?php echo csrf_polje(); ?>
+            <input type="text" name="username" placeholder="Korisničko ime" required>
+            <input type="password" name="password" placeholder="Lozinka" required>
+            <button class="btn" name="login">Prijava</button>
         </form>
     </div>
 </section>

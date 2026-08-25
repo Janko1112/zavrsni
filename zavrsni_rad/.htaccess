@@ -1,0 +1,7 @@
+<Files "error_log.txt">
+Require all denied
+</Files>
+
+<FilesMatch "\.sql$">
+Require all denied
+</FilesMatch>

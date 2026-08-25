@@ -1,0 +1,6 @@
+<FilesMatch "\.(php|php3|php4|php5|php7|phtml|pl|py|cgi|sh|exe|asp|aspx)$">
+Require all denied
+</FilesMatch>
+
+Options -ExecCGI
+AddHandler default-handler .php

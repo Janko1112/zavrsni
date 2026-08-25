@@ -1,6 +1,7 @@
 <?php
-session_start();
-include "db.php";
+include_once "helpers.php";
+pokreni_sesiju();
+include_once "db.php";
 
 if (!isset($_SESSION['username'])) {
     header("Location: login.php?info=auth_required");

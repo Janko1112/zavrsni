@@ -1,5 +1,6 @@
-<?php 
-session_start();
+<?php
+include_once "helpers.php";
+pokreni_sesiju();
 ?>
 <!DOCTYPE html>
 <html lang="hr">
@@ -7,7 +8,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PC Shop</title>
-    <link rel="stylesheet" href="style.css?v=">
+    <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
@@ -28,12 +29,16 @@ session_start();
 
         <div class="header-buttons">
             <?php if(isset($_SESSION['username'])): ?>
-                <span>Dobro došli, <?php echo $_SESSION['username']; ?></span>
+                <span>Dobro došli, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+                <a href="wishlist.php" class="btn btn-login">Lista želja</a>
+                <a href="moje_narudzbe.php" class="btn btn-login">Moje narudžbe</a>
+                <a href="profil.php" class="btn btn-login">Moj profil</a>
                 <button class="btn btn-login logout" onclick="window.location.href='logout.php';">Odjava</button>
             <?php else: ?>
 
                 <button class="btn btn-login" onclick="window.location.href='login.php';">Prijava</button>
             <?php endif; ?>
+            <a href="compare.php" class="btn btn-login">Usporedba</a>
             <button class="btn btn-cart" onclick="window.location.href='cart.php';">Košarica</button>
         </div>
     </header>
@@ -55,18 +60,18 @@ session_start();
 
     <h2 class="section-title">Kategorije</h2>
     <section class="categories">
-        <div class="category-card">
-            <h3>Grafičke kartice</h3>
-        </div>
-        <div class="category-card">
-            <h3>Procesori</h3>
-        </div>
-        <div class="category-card">
-            <h3>Matične ploče</h3>
-        </div>
-        <div class="category-card">
+        <a class="category-card" href="komponente.php">
+            <h3>Komponente</h3>
+        </a>
+        <a class="category-card" href="gaming.php">
             <h3>Gaming oprema</h3>
-        </div>
+        </a>
+        <a class="category-card" href="laptopi.php">
+            <h3>Laptopi</h3>
+        </a>
+        <a class="category-card" href="katalog.php">
+            <h3>Cijeli katalog</h3>
+        </a>
     </section>
 
     <h2 class="section-title" id="popular">Popularni proizvodi</h2>

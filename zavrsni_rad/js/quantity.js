@@ -1,8 +1,13 @@
 function increaseQuantity(){
 
     let quantity = document.getElementById("quantity");
+    let maksimum = parseInt(quantity.getAttribute("max"));
 
-    quantity.value = parseInt(quantity.value) + 1;
+    if (!maksimum || parseInt(quantity.value) < maksimum) {
+        quantity.value = parseInt(quantity.value) + 1;
+    } else {
+        alert("Ne možete naručiti više od " + maksimum + " kom ovog proizvoda.");
+    }
 }
 
 function decreaseQuantity(){
